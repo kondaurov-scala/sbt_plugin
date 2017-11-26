@@ -1,22 +1,12 @@
-package com.github.kondaurovdev
+package com.github.kondaurovdev.plugin
 
+import bintray.BintrayKeys.{bintrayReleaseOnPublish, bintrayRepository}
 import sbt.Keys._
-import sbt.{Def, _}
-import bintray.BintrayKeys._
-import com.github.kondaurovdev.AkCommonPlugin.autoImport.{akCommonVcsPath, akCommonVcsType}
+import sbt._
 
-object AkCommonPlugin extends AutoPlugin {
+object CommonSettings {
 
-  override def requires = plugins.JvmPlugin
-
-  override def trigger: PluginTrigger = allRequirements
-
-  object autoImport {
-
-    lazy val akCommonVcsPath: SettingKey[String] = settingKey[String]("Vcs repo uri")
-    lazy val akCommonVcsType: SettingKey[String] = settingKey[String]("Vcs type")
-
-  }
+  import AkCommonPlugin.autoImport._
 
   def publishSettings: Seq[Def.Setting[_]] = Seq(
     organization := "com.github.kondaurovdev",
@@ -52,17 +42,5 @@ object AkCommonPlugin extends AutoPlugin {
         </developers>,
     pomIncludeRepository := { _ => false }
   )
-
-  import autoImport._
-
-  override lazy val projectSettings: Seq[Def.Setting[_]] = Seq(
-    scalaVersion := "2.12.2",
-    scalacOptions ++= Seq("-deprecation"),
-    akCommonVcsType := "git",
-    resolvers ++= Seq(
-      Resolver.sonatypeRepo("snapshots"),
-      Resolver.bintrayRepo("kondaurovdev", "maven")
-    )
-  ) ++ publishSettings
 
 }

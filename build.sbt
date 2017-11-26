@@ -1,5 +1,6 @@
 lazy val plugin = (project in file("plugin"))
   .settings(
+    version := "0.0.1-SNAPSHOT",
     name := "sbt-plugin",
     organization := "com.github.kondaurovdev",
     sbtPlugin := true,
