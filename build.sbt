@@ -6,11 +6,11 @@ lazy val plugin = (project in file("plugin"))
     organization := "com.github.kondaurovdev",
     sbtPlugin := true,
     publishTo := {
-      if (isSnapshot.value) {
+      val v = publishTo.value
+      if (isSnapshot.value)
         Some("Sonatype Nexus Repository Manager" at "https://oss.sonatype.org/content/repositories/snapshots/")
-      } else {
-        publishTo.value
-      }
+      else
+        v
     },
     bintrayRepository := "maven",
     publishArtifact in (Compile, packageDoc) := !isSnapshot.value,
@@ -19,7 +19,7 @@ lazy val plugin = (project in file("plugin"))
     bintrayReleaseOnPublish := !isSnapshot.value,
     addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.5.1"),
     addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.1"),
-    addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.1.0"),
+    addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.2.6"),
     credentials ++= Seq(
       Credentials(Path.userHome / ".ivy2" / ".sonatype")
     ),

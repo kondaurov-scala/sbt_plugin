@@ -19,7 +19,6 @@ object AkCommonPlugin extends AutoPlugin {
   import autoImport._
 
   override lazy val projectSettings: Seq[Def.Setting[_]] = Seq(
-    scalaVersion := "2.12.2",
     scalacOptions ++= Seq("-deprecation"),
     akCommonVcsType := "git",
     resolvers ++= Seq(

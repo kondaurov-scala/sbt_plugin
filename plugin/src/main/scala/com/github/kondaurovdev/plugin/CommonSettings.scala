@@ -11,10 +11,11 @@ object CommonSettings {
   def publishSettings: Seq[Def.Setting[_]] = Seq(
     organization := "com.github.kondaurovdev",
     publishTo := {
+      val v = publishTo.value
       if (isSnapshot.value) {
         Some("Sonatype Nexus Repository Manager" at "https://oss.sonatype.org/content/repositories/snapshots/")
       } else {
-        publishTo.value
+        v
       }
     },
     bintrayRepository := "maven",
