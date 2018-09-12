@@ -1,11 +1,10 @@
-package com.github.kondaurovdev
+package com.github.kondaurovdev.plugin
 
+import bintray.BintrayKeys.{bintrayReleaseOnPublish, bintrayRepository}
 import sbt.Keys._
 import sbt.{Def, _}
-import bintray.BintrayKeys._
-import com.github.kondaurovdev.AkCommonPlugin.autoImport.{akCommonVcsPath, akCommonVcsType}
 
-object AkCommonPlugin extends AutoPlugin {
+object SbtPublishPlugin extends AutoPlugin {
 
   override def requires = plugins.JvmPlugin
 
@@ -18,13 +17,22 @@ object AkCommonPlugin extends AutoPlugin {
 
   }
 
-  def publishSettings: Seq[Def.Setting[_]] = Seq(
+  import autoImport._
+
+  override lazy val projectSettings: Seq[Def.Setting[_]] = Seq(
+    scalacOptions ++= Seq("-deprecation"),
+    akCommonVcsType := "git",
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("snapshots"),
+      Resolver.bintrayRepo("kondaurovdev", "maven")
+    ),
     organization := "com.github.kondaurovdev",
     publishTo := {
+      val v = publishTo.value
       if (isSnapshot.value) {
         Some("Sonatype Nexus Repository Manager" at "https://oss.sonatype.org/content/repositories/snapshots/")
       } else {
-        publishTo.value
+        v
       }
     },
     bintrayRepository := "maven",
@@ -52,17 +60,5 @@ object AkCommonPlugin extends AutoPlugin {
         </developers>,
     pomIncludeRepository := { _ => false }
   )
-
-  import autoImport._
-
-  override lazy val projectSettings: Seq[Def.Setting[_]] = Seq(
-    scalaVersion := "2.12.2",
-    scalacOptions ++= Seq("-deprecation"),
-    akCommonVcsType := "git",
-    resolvers ++= Seq(
-      Resolver.sonatypeRepo("snapshots"),
-      Resolver.bintrayRepo("kondaurovdev", "maven")
-    )
-  ) ++ publishSettings
 
 }
