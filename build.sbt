@@ -1,6 +1,8 @@
 
 organization in ThisBuild := "com.github.kondaurovdev"
 
+val vcsUri = "github.com/kondaurov-scala/sbt_plugin.git"
+
 val commonSettings = Seq(
   publishTo := {
     val v = publishTo.value
@@ -11,6 +13,7 @@ val commonSettings = Seq(
   },
   bintrayRepository := "maven",
   licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
+  bintrayVcsUrl := Some(s"https://$vcsUri"),
   bintrayReleaseOnPublish := !isSnapshot.value,
   publishArtifact in (Compile, packageDoc) := !isSnapshot.value,
   publishArtifact in (Test, packageDoc) := false,
@@ -19,19 +22,18 @@ val commonSettings = Seq(
   ),
   publishMavenStyle := true,
   pomExtra :=
-    <url>https://github.com/kondaurov-scala/sbt_plugin</url>
-      <scm>
-        <url>https://github.com/kondaurov-scala/sbt_plugin.git</url>
-        <connection>https://github.com/kondaurov-scala/sbt_plugin.=</connection>
-        <tag>${version.value}</tag>
-      </scm>
-      <developers>
-        <developer>
-          <id>kondaurovdev</id>
-          <name>Alexander Kondaurov</name>
-          <email>kondaurov.dev@gmail.com</email>
-        </developer>
-      </developers>,
+    <url>https://{vcsUri}</url>
+    <scm>
+      <connection>scv:git:git@{vcsUri}</connection>
+      <tag>{version.value}</tag>
+    </scm>
+    <developers>
+      <developer>
+        <id>kondaurovdev</id>
+        <name>Alexander Kondaurov</name>
+        <email>kondaurov.dev@gmail.com</email>
+      </developer>
+    </developers>,
   pomIncludeRepository := { _ => false }
 )
 
@@ -66,3 +68,6 @@ lazy val packager_plugin = (project in file("packager_plugin"))
     sbtPlugin := true,
     addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.6")
   )
+
+publish := {}
+publishLocal := {}
