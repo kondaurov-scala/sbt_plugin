@@ -1,6 +1,6 @@
 package com.github.kondaurovdev.plugin
 
-import bintray.BintrayKeys.{bintrayReleaseOnPublish, bintrayRepository}
+import bintray.BintrayKeys._
 import sbt.Keys._
 import sbt.{Def, _}
 
@@ -36,6 +36,7 @@ object SbtPublishPlugin extends AutoPlugin {
       }
     },
     bintrayRepository := "maven",
+    bintrayVcsUrl := Some(s"https://${akCommonVcsPath.value}"),
     publishArtifact in (Compile, packageDoc) := !isSnapshot.value,
     publishArtifact in (Test, packageDoc) := false,
     bintrayReleaseOnPublish := !isSnapshot.value,
@@ -45,19 +46,19 @@ object SbtPublishPlugin extends AutoPlugin {
     ),
     publishMavenStyle := true,
     pomExtra :=
-      <url>${akCommonVcsPath.value}</url>
-        <scm>
-          <url>${akCommonVcsPath.value}.${akCommonVcsType.value}</url>
-          <connection>${akCommonVcsPath.value}.${akCommonVcsType.value}</connection>
-          <tag>${version.value}</tag>
-        </scm>
-        <developers>
-          <developer>
-            <id>kondaurovdev</id>
-            <name>Alexander Kondaurov</name>
-            <email>kondaurov.dev@gmail.com</email>
-          </developer>
-        </developers>,
+      <url>https://{akCommonVcsPath.value}</url>
+      <scm>
+        <url>https://{akCommonVcsPath.value}</url>
+        <connection>scm:{akCommonVcsType}:{akCommonVcsPath.value}</connection>
+        <tag>{version.value}</tag>
+      </scm>
+      <developers>
+        <developer>
+          <id>kondaurovdev</id>
+          <name>Alexander Kondaurov</name>
+          <email>kondaurov.dev@gmail.com</email>
+        </developer>
+      </developers>,
     pomIncludeRepository := { _ => false }
   )
 

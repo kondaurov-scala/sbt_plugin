@@ -24,6 +24,7 @@ val commonSettings = Seq(
   pomExtra :=
     <url>https://{vcsUri}</url>
     <scm>
+      <url>https://{vcsUri}</url>
       <connection>scv:git:git@{vcsUri}</connection>
       <tag>{version.value}</tag>
     </scm>
