@@ -49,7 +49,7 @@ object SbtPublishPlugin extends AutoPlugin {
       <url>https://{akCommonVcsPath.value}</url>
       <scm>
         <url>https://{akCommonVcsPath.value}</url>
-        <connection>scm:{akCommonVcsType}:{akCommonVcsPath.value}</connection>
+        <connection>scm:{akCommonVcsType.value}:{akCommonVcsPath.value}</connection>
         <tag>{version.value}</tag>
       </scm>
       <developers>
